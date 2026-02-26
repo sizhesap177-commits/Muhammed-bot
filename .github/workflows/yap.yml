@@ -5,15 +5,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - name: Install Dependencies
+
+      - name: Install ALL Dependencies
         run: |
           sudo apt update
-          sudo apt install -y build-essential libffi-dev python3-dev
-          pip install --upgrade pip buildozer cython kivy
+          sudo apt install -y build-essential git ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev libffi-dev libssl-dev autoconf automake libtool pkg-config cmake
+          pip install --upgrade pip
+          pip install --upgrade Cython==0.29.33 buildozer kivy pyTelegramBotAPI requests pillow
+
       - name: Build with Buildozer
-        run: yes | buildozer android debug
-        
+        run: |
+          yes | buildozer android debug
+          
